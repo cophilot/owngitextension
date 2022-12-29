@@ -1,7 +1,7 @@
 {
    "name": "owngitextension",
    "displayName": "OwnGitExtension",
-   "description": "description",
+   "description": "Provides tools for creating and changing GitHub repositories.",
    "author": "Philipp B.",
    "publisher": "Philipp B.",
    "license": "MIT",
@@ -16,6 +16,7 @@
    "categories": [
       "Other"
    ],
+   "icon": "/resources/logo.png",
    "activationEvents": [
       "onCommand:owngitextension.createGitRepo",
       "onCommand:owngitextension.openOptions",
