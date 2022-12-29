@@ -17,15 +17,33 @@
       "Other"
    ],
    "activationEvents": [
-      "onCommand:owngitextension.helloWorld"
+      "onCommand:owngitextension.createGitRepo",
+      "onCommand:owngitextension.openOptions",
+      "onCommand:owngitextension.addReadmeOverview",
+      "onCommand:owngitextension.addNewVersion"
    ],
    "main": "./extension.js",
    "contributes": {
       "commands": [
          {
-            "command": "owngitextension.helloWorld",
-            "title": "Hello World",
-            "category": "Own Git"
+            "command": "owngitextension.createGitRepo",
+            "title": "Create GitHub Repository Files",
+            "category": "Own Git Extension"
+         },
+         {
+            "command": "owngitextension.openOptions",
+            "title": "Open Options File",
+            "category": "Own Git Extension"
+         },
+         {
+            "command": "owngitextension.addReadmeOverview",
+            "title": "Add Readme Overview",
+            "category": "Own Git Extension"
+         },
+         {
+            "command": "owngitextension.addNewVersion",
+            "title": "Add New Version",
+            "category": "Own Git Extension"
          }
       ]
    },

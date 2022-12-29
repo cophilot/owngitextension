@@ -1,0 +1,51 @@
+{
+   "GitHubName": "",
+   "FullName": "",
+   "__comment": [
+      "Use ${GITHUBNAME} for your github name",
+      "Use ${FULLNAME} for your full name",
+      "Use ${REPONAME} for your the name of the repository",
+      "Use ${YEAR} for the current year",
+      "Use ${MONTH} for the current month",
+      "Use ${DAY} for the current day of the month"
+   ],
+   "README Template": [
+      "# ${REPONAME}",
+      "",
+      "Description",
+      "",
+      "---",
+      "",
+      "* [Bugs](https://github.com/${GITHUBNAME}/${REPONAME}#bugs)",
+      "* [Release Notes](https://github.com/${GITHUBNAME}/${REPONAME}#release-notes)",
+      "",
+      "---",
+      "",
+      "## Bugs",
+      "",
+      "* *no known bugs*",
+      "",
+      "---",
+      "",
+      "## [Release Notes](https://github.com/${GITHUBNAME}/${REPONAME}/blob/master/CHANGELOG.md)",
+      "",
+      "### [v0.0.1](https://github.com/${GITHUBNAME}/${REPONAME}/tree/0.0.1)",
+      "",
+      "* *Initial release*",
+      "",
+      "---",
+      "",
+      "by ${FULLNAME}"
+   ],
+   "CHANGELOG Template": [
+      "# Change Log *${REPONAME}*",
+      "",
+      "---",
+      "",
+      "## [v0.0.1](https://github.com/${GITHUBNAME}/${REPONAME}/tree/0.0.1) (${YEAR}-${MONTH}-${DAY})",
+      "",
+      "* *Initial release*",
+      "",
+      "---"
+   ]
+}
