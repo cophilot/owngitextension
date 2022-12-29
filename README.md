@@ -1,6 +1,6 @@
 # OwnGitExtension
 
-Provides tools for creating and changing GitHub Repositroies.
+Provides tools for creating and changing GitHub repositories.
 
 ---
 
