@@ -1,3 +1,5 @@
+<img src="https://github.com/phil1436/owngitextension/raw/main/resources/logo.png" width="25%"/>
+
 # OwnGitExtension
 
 Provides tools for creating and changing GitHub repositories.
