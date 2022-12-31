@@ -76,7 +76,7 @@ Open the *options.json* file via `Own ObjectScript Options: Open Options File`
 
 ## Bugs
 
-* *no known bugs*
+* `Add New Version` will also rename the version tags of the dependencies in package.json and package-lock.json
 
 ---
 
