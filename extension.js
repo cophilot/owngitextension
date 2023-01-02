@@ -2,8 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const vscode = require('vscode');
 
-const optionsFile = path.join(__dirname, 'options.json');
-let optionsJSON = JSON.parse(fs.readFileSync(optionsFile).toString());
+/* const optionsFile = path.join(__dirname, 'options.json');
+let optionsJSON = JSON.parse(fs.readFileSync(optionsFile).toString()); */
+
+const fileTemplatesFile = path.join(__dirname, 'FileTemplates.json');
+let fileTemplatesJSON = JSON.parse(
+   fs.readFileSync(fileTemplatesFile).toString()
+);
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -63,7 +68,9 @@ function activate(context) {
          //github name
          let githubName = await vscode.window.showInputBox({
             placeHolder: 'Your GitHub Name',
-            value: optionsJSON['GitHubName'],
+            value: vscode.workspace
+               .getConfiguration('owngitextension')
+               .get('GitHubName'),
             title: 'GitHub Name',
          });
          if (githubName == undefined) {
@@ -72,7 +79,9 @@ function activate(context) {
          //Fullname
          let fullName = await vscode.window.showInputBox({
             placeHolder: 'Your Full Name',
-            value: optionsJSON['FullName'],
+            value: vscode.workspace
+               .getConfiguration('owngitextension')
+               .get('FullName'),
             title: 'Full Name',
          });
          if (fullName == undefined) {
@@ -95,8 +104,8 @@ function activate(context) {
          let day = date.getDate();
 
          let readmecontent = '';
-         for (let i in optionsJSON['README Template']) {
-            let line = optionsJSON['README Template'][i].replace(
+         for (let i in fileTemplatesJSON['README Template']) {
+            let line = fileTemplatesJSON['README Template'][i].replace(
                /\$\{GITHUBNAME\}/g,
                githubName
             );
@@ -117,8 +126,8 @@ function activate(context) {
 
          //CHANGELOG
          let changelogcontent = '';
-         for (let i in optionsJSON['CHANGELOG Template']) {
-            let line = optionsJSON['CHANGELOG Template'][i].replace(
+         for (let i in fileTemplatesJSON['CHANGELOG Template']) {
+            let line = fileTemplatesJSON['CHANGELOG Template'][i].replace(
                /\$\{GITHUBNAME\}/g,
                githubName
             );
@@ -194,7 +203,9 @@ function activate(context) {
          //github name
          let githubName = await vscode.window.showInputBox({
             placeHolder: 'Your GitHub Name',
-            value: optionsJSON['GitHubName'],
+            value: vscode.workspace
+               .getConfiguration('owngitextension')
+               .get('GitHubName'),
             title: 'GitHub Name',
          });
          if (githubName == undefined) {
@@ -353,7 +364,12 @@ function activate(context) {
             if (uris.length == 1) packageJsonUri = uris[0];
          });
 
-         if (packageJsonUri != undefined) {
+         if (
+            packageJsonUri != undefined &&
+            vscode.workspace
+               .getConfiguration('owngitextension.NewVersion')
+               .get('EditPackageFile')
+         ) {
             await (
                await vscode.workspace.openTextDocument(packageJsonUri)
             ).save();
@@ -362,9 +378,17 @@ function activate(context) {
                .readFileSync(packageJsonUri.fsPath, 'utf-8')
                .split('\n');
             let newPackageContent = '';
+            let depth = 0;
             for (let i in oldPackageContent) {
-               if (oldPackageContent[i].includes('"version":')) {
-                  newPackageContent += '  "version": "' + newVersion + '",\n';
+               //only edit if the depth = 1
+               if (oldPackageContent[i].includes('{'))
+                  depth += (oldPackageContent[i].match(/\{/g) || []).length;
+               if (oldPackageContent[i].includes('}'))
+                  depth -= (oldPackageContent[i].match(/\}/g) || []).length;
+
+               //edit
+               if (oldPackageContent[i].includes('"version":') && depth == 1) {
+                  newPackageContent += '   "version": "' + newVersion + '",\n';
                } else {
                   newPackageContent += oldPackageContent[i];
                   if (i != oldPackageContent.length - 1) {
@@ -381,7 +405,12 @@ function activate(context) {
             if (uris.length == 1) packageLockJsonUri = uris[0];
          });
 
-         if (packageLockJsonUri != undefined) {
+         if (
+            packageLockJsonUri != undefined &&
+            vscode.workspace
+               .getConfiguration('owngitextension.NewVersion')
+               .get('EditPackageLockFile')
+         ) {
             await (
                await vscode.workspace.openTextDocument(packageLockJsonUri)
             ).save();
@@ -389,10 +418,20 @@ function activate(context) {
                .readFileSync(packageLockJsonUri.fsPath, 'utf-8')
                .split('\n');
             let newPackageLockContent = '';
+            let depth = 0;
             for (let i in oldPackageLockContent) {
-               if (oldPackageLockContent[i].includes('"version":')) {
+               //only edit if the depth = 1
+               if (oldPackageLockContent[i].includes('{'))
+                  depth += (oldPackageLockContent[i].match(/\{/g) || []).length;
+               if (oldPackageLockContent[i].includes('}'))
+                  depth -= (oldPackageLockContent[i].match(/\}/g) || []).length;
+
+               if (
+                  oldPackageLockContent[i].includes('"version":') &&
+                  depth == 1
+               ) {
                   newPackageLockContent +=
-                     '  "version": "' + newVersion + '",\n';
+                     '   "version": "' + newVersion + '",\n';
                } else {
                   newPackageLockContent += oldPackageLockContent[i] + '\n';
                }
@@ -402,14 +441,19 @@ function activate(context) {
          }
       }
    );
-   //open options
-   vscode.commands.registerCommand('owngitextension.openOptions', function () {
-      vscode.workspace
-         .openTextDocument(vscode.Uri.file(optionsFile))
-         .then((a) => {
-            vscode.window.showTextDocument(a, 1, false);
-         });
-   });
+   //open file templates
+   vscode.commands.registerCommand(
+      'owngitextension.openFileTemplates',
+      function () {
+         vscode.workspace
+            .openTextDocument(vscode.Uri.file(fileTemplatesFile))
+            .then((a) => {
+               vscode.window.showTextDocument(a, 1, false);
+            });
+         vscode.window.showWarningMessage('Reload window after editing!');
+      }
+   );
+
    context.subscriptions.push(disposable);
 }
 

@@ -1,6 +1,4 @@
 {
-   "GitHubName": "",
-   "FullName": "",
    "__comment": [
       "Use ${GITHUBNAME} for your github name",
       "Use ${FULLNAME} for your full name",
