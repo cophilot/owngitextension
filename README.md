@@ -63,6 +63,8 @@ or download the [latest realease](https://github.com/phil1436/owngitextension/re
 * `Add Readme Overview`: Adds a Overview to your *README* file.
 * `Add New Version`: Adds a new Version to your current repository.
 * `Edit File Templates`: Opens the *FileTemplates.json* file.
+* `Add License Template`: Add a Custom license template.
+* `Edit License Template`: Edit a existing license template.
 
 ---
 
@@ -87,6 +89,12 @@ Go to `File > Preferences > Settings` and than navigate to `Extensions > OwnGitE
 ---
 
 ## [Release Notes](https://github.com/phil1436/owngitextension/blob/master/CHANGELOG.md)
+
+### [v0.0.3](https://github.com/phil1436/owngitextension/tree/0.0.3)
+
+* Bug fixes
+* License Template added
+* Commands added
 
 ### [v0.0.2](https://github.com/phil1436/owngitextension/tree/0.0.2)
 
