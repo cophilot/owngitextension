@@ -2,6 +2,16 @@
 
 ---
 
+## [v0.0.3](https://github.com/phil1436/owngitextension/tree/0.0.3) (2023-1-9)
+
+* Bug Fixes
+* *GPL3* License added
+* `Add Readme Overview` links to *#heading* instead of total link
+* Command `Add License Template` added
+* Command `Edit License Template` added
+
+---
+
 ## [v0.0.2](https://github.com/phil1436/owngitextension/tree/0.0.2) (2023-1-2)
 
 * Bug fixes
