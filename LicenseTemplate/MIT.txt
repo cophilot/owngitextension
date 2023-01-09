@@ -1,3 +1,12 @@
+/$/ MIT License Template
+/$/ /$/ marks a comment line and will not appear in your license
+/$/ Use ${GITHUBNAME} for your github name
+/$/ Use ${FULLNAME} for your full name
+/$/ Use ${REPONAME} for the name of the repository
+/$/ Use ${Year} for the current year
+/$/ Use ${MONTH} for the current month
+/$/ Use ${DAY} for the current day
+/$/ 
 MIT License
 
 Copyright (c) ${YEAR} ${FULLNAME}

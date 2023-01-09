@@ -19,7 +19,7 @@ function activate(context) {
       'owngitextension.createGitRepo',
       async function () {
          if (vscode.workspace.workspaceFolders.length == 0) {
-            vscode.window.showErrorMessage('Open a folder first!');
+            vscode.window.showErrorMessage('Open a folder!');
             return;
          }
          let workspacefolderUri = undefined;
@@ -89,14 +89,25 @@ function activate(context) {
          }
          //license name
          let licenseName = '';
-         await vscode.window.showQuickPick(['MIT', 'Apache2.0', 'ISC']).then(
-            (value) => {
-               licenseName = value;
-            },
-            (reason) => {
-               vscode.window.showErrorMessage('Something went wrong:' + reason);
-            }
-         );
+         await vscode.window
+            .showQuickPick(
+               fs
+                  .readdirSync(path.join(__dirname, 'LicenseTemplate'))
+                  .map((value, index, array) => {
+                     return value.replace('.txt', '');
+                  })
+            )
+            .then(
+               (value) => {
+                  licenseName = value;
+               },
+               (reason) => {
+                  vscode.window.showErrorMessage(
+                     'Something went wrong:' + reason
+                  );
+               }
+            );
+         if (licenseName == '' || licenseName == undefined) return;
          //README
          let date = new Date();
          let year = date.getFullYear();
@@ -169,24 +180,17 @@ function activate(context) {
 
          //LICENSE
          let licenseUri = vscode.Uri.joinPath(workspacefolderUri, 'LICENSE');
-         let licenseContent = '';
-         switch (licenseName.toLowerCase()) {
-            case 'mit':
-               licenseContent = readLicense('MIT');
-               break;
-            case 'apache2.0':
-               licenseContent = readLicense('Apache2.0');
-               break;
-            case 'isc':
-               licenseContent = readLicense('ISC');
-               break;
-            default:
-               break;
-         }
-         licenseContent =
-            licenseContent
-               .replace(/\$\{FULLNAME\}/g, fullName)
-               .replace(/\$\{YEAR\}/g, year) + '\n';
+         let licenseContent = readLicense(licenseName);
+
+         licenseContent = licenseContent.replace(
+            /\$\{GITHUBNAME\}/g,
+            githubName
+         );
+         licenseContent = licenseContent.replace(/\$\{FULLNAME\}/g, fullName);
+         licenseContent = licenseContent.replace(/\$\{REPONAME\}/g, repoName);
+         licenseContent = licenseContent.replace(/\$\{YEAR\}/g, year);
+         licenseContent = licenseContent.replace(/\$\{MONTH\}/g, month);
+         licenseContent = licenseContent.replace(/\$\{DAY\}/g, day);
          await vscode.workspace.fs.writeFile(
             licenseUri,
             new TextEncoder().encode(licenseContent)
@@ -201,7 +205,7 @@ function activate(context) {
       async function () {
          if (!preConditionsMarkdown()) return;
          //github name
-         let githubName = await vscode.window.showInputBox({
+         /* let githubName = await vscode.window.showInputBox({
             placeHolder: 'Your GitHub Name',
             value: vscode.workspace
                .getConfiguration('owngitextension')
@@ -210,7 +214,7 @@ function activate(context) {
          });
          if (githubName == undefined) {
             return;
-         }
+         } */
          let repoName = undefined;
          let headings = [];
          for (
@@ -247,6 +251,16 @@ function activate(context) {
                .toLowerCase()
                .replace(/\./g, '')
                .replace(/\s/g, '-');
+            line += '* [' + headings[i].name + '](#' + trimmedName + ')';
+            overview += line + '\n';
+         }
+         /* for (let i in headings) {
+            let line = '';
+            for (let j = 1; j < headings[i].level; j++) line += '  ';
+            let trimmedName = headings[i].name
+               .toLowerCase()
+               .replace(/\./g, '')
+               .replace(/\s/g, '-');
             line +=
                '* [' +
                headings[i].name +
@@ -258,7 +272,7 @@ function activate(context) {
                trimmedName +
                ')';
             overview += line + '\n';
-         }
+         } */
          //vscode.env.clipboard.writeText(overview);
          vscode.window.activeTextEditor.edit(function (editBuilder) {
             editBuilder.insert(
@@ -293,6 +307,10 @@ function activate(context) {
             }
          });
 
+         let githubName = vscode.workspace
+            .getConfiguration('owngitextension')
+            .get('GitHubName');
+         if (githubName == '') githubName = 'GitHubName';
          //changelog
          if (changelogUri != undefined) {
             await (
@@ -302,7 +320,9 @@ function activate(context) {
             let newVersionContent =
                '---\n\n## [v' +
                newVersion +
-               '](https://github.com/GitHubName/RepoName/tree/' +
+               '](https://github.com/' +
+               githubName +
+               '/RepoName/tree/' +
                newVersion +
                ') (' +
                date.getFullYear() +
@@ -332,7 +352,9 @@ function activate(context) {
             let newVersionContent =
                '\n### [v' +
                newVersion +
-               '](https://github.com/GitHubName/RepoName/tree/' +
+               '](https://github.com/' +
+               githubName +
+               '/RepoName/tree/' +
                newVersion +
                ')\n\n* \n';
             let oldReadmecontent = fs
@@ -453,6 +475,74 @@ function activate(context) {
          vscode.window.showWarningMessage('Reload window after editing!');
       }
    );
+   //add license template
+   vscode.commands.registerCommand(
+      'owngitextension.addLicenseTemplate',
+      async function () {
+         //license name
+         let licenseName = await vscode.window.showInputBox({
+            placeHolder: 'License Name',
+            title: 'License Name',
+         });
+         if (licenseName == undefined) {
+            return;
+         }
+         let header =
+            '/$/ ' +
+            licenseName +
+            ' License Template\n/$/ /$/ marks a comment line and will not appear in your licen\n/$/ Use ${GITHUBNAME} for your github na\n/$/ Use ${FULLNAME} for your full na\n/$/ Use ${REPONAME} for the name of the reposito\n/$/ Use ${Year} for the current ye\n/$/ Use ${MONTH} for the current mon\n/$/ Use ${DAY} for the current day\n/$/\n';
+         fs.writeFileSync(
+            path.join(__dirname, 'LicenseTemplate', licenseName + '.txt'),
+            header
+         );
+         vscode.workspace
+            .openTextDocument(
+               vscode.Uri.file(
+                  path.join(__dirname, 'LicenseTemplate', licenseName + '.txt')
+               )
+            )
+            .then((a) => {
+               vscode.window.showTextDocument(a, 1, false);
+            });
+      }
+   );
+   //edit license template
+   vscode.commands.registerCommand(
+      'owngitextension.editLicenseTemplate',
+      async function () {
+         //license name
+         let licenseName = '';
+         await vscode.window
+            .showQuickPick(
+               fs
+                  .readdirSync(path.join(__dirname, 'LicenseTemplate'))
+                  .map((value, index, array) => {
+                     return value.replace('.txt', '');
+                  })
+            )
+            .then(
+               (value) => {
+                  licenseName = value;
+               },
+               (reason) => {
+                  vscode.window.showErrorMessage(
+                     'Something went wrong:' + reason
+                  );
+               }
+            );
+         if (licenseName == '' || licenseName == undefined) return;
+
+         vscode.workspace
+            .openTextDocument(
+               vscode.Uri.file(
+                  path.join(__dirname, 'LicenseTemplate', licenseName + '.txt')
+               )
+            )
+            .then((a) => {
+               vscode.window.showTextDocument(a, 1, false);
+            });
+      }
+   );
 
    context.subscriptions.push(disposable);
 }
@@ -461,10 +551,18 @@ function activate(context) {
 function deactivate() {}
 
 function readLicense(licenseName) {
-   return fs.readFileSync(
-      path.join(__dirname, 'LicenseTemplate', licenseName + '.txt'),
-      'utf-8'
-   );
+   let textArr = fs
+      .readFileSync(
+         path.join(__dirname, 'LicenseTemplate', licenseName + '.txt'),
+         'utf-8'
+      )
+      .split('\n');
+   let text = '';
+   for (let i in textArr) {
+      if (textArr[i].startsWith('/$/')) continue;
+      text += textArr[i] + '\n';
+   }
+   return text;
 }
 
 function preConditionsMarkdown() {
