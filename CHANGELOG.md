@@ -2,6 +2,15 @@
 
 ---
 
+## [v0.0.4](https://github.com/phil1436/owngitextension/tree/0.0.4) (2023-1-11)
+
+* Command `Link To File` added
+* `Create GitHub Repository Files` uses more dynamic file templates. Add and remove file templates to your needs.
+* `Add New Version` only adds a new version to *README* and *CHANGELOG* if the version number does not already exists.
+* `Add Readme Overview` renamed to `Add Markdown Overview`
+
+---
+
 ## [v0.0.3](https://github.com/phil1436/owngitextension/tree/0.0.3) (2023-1-9)
 
 * Bug Fixes
