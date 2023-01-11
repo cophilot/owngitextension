@@ -8,7 +8,7 @@ let optionsJSON = JSON.parse(fs.readFileSync(optionsFile).toString()); */
 const fileTemplatesFile = path.join(__dirname, 'FileTemplates.json');
 let fileTemplatesJSON = JSON.parse(
    fs.readFileSync(fileTemplatesFile).toString()
-);
+)['File Templates'];
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -108,64 +108,50 @@ function activate(context) {
                }
             );
          if (licenseName == '' || licenseName == undefined) return;
-         //README
+
          let date = new Date();
          let year = date.getFullYear();
          let month = date.getMonth() + 1;
          let day = date.getDate();
 
-         let readmecontent = '';
-         for (let i in fileTemplatesJSON['README Template']) {
-            let line = fileTemplatesJSON['README Template'][i].replace(
-               /\$\{GITHUBNAME\}/g,
-               githubName
+         let gitignoreContent = 'node_modules/**\n';
+
+         //add files
+         for (let i in fileTemplatesJSON) {
+            let template = fileTemplatesJSON[i];
+            let fileContent = '';
+            for (let j in template['text']) {
+               let line = template['text'][j].replace(
+                  /\$\{GITHUBNAME\}/g,
+                  githubName
+               );
+               line = line.replace(/\$\{FULLNAME\}/g, fullName);
+               line = line.replace(/\$\{REPONAME\}/g, repoName);
+               line = line.replace(/\$\{YEAR\}/g, year);
+               line = line.replace(/\$\{MONTH\}/g, month);
+               line = line.replace(/\$\{DAY\}/g, day);
+               fileContent += line + '\n';
+            }
+
+            if (template.hasOwnProperty('gitignore')) {
+               if (template['gitignore'])
+                  gitignoreContent += template['name'] + '\n';
+            }
+
+            let fileUri = vscode.Uri.joinPath(
+               workspacefolderUri,
+               template['name']
             );
-            line = line.replace(/\$\{FULLNAME\}/g, fullName);
-            line = line.replace(/\$\{REPONAME\}/g, repoName);
-            line = line.replace(/\$\{YEAR\}/g, year);
-            line = line.replace(/\$\{MONTH\}/g, month);
-            line = line.replace(/\$\{DAY\}/g, day);
-            readmecontent += line + '\n';
-         }
-         let readmeUri = vscode.Uri.joinPath(workspacefolderUri, 'README.md');
 
-         await vscode.workspace.fs.writeFile(
-            readmeUri,
-            new TextEncoder().encode(readmecontent)
-         );
-         vscode.window.showTextDocument(readmeUri, { preview: false });
-
-         //CHANGELOG
-         let changelogcontent = '';
-         for (let i in fileTemplatesJSON['CHANGELOG Template']) {
-            let line = fileTemplatesJSON['CHANGELOG Template'][i].replace(
-               /\$\{GITHUBNAME\}/g,
-               githubName
+            await vscode.workspace.fs.writeFile(
+               fileUri,
+               new TextEncoder().encode(fileContent)
             );
-            line = line.replace(/\$\{FULLNAME\}/g, fullName);
-            line = line.replace(/\$\{REPONAME\}/g, repoName);
-            line = line.replace(/\$\{YEAR\}/g, year);
-            line = line.replace(/\$\{MONTH\}/g, month);
-            line = line.replace(/\$\{DAY\}/g, day);
-            changelogcontent += line + '\n';
+            if (template.hasOwnProperty('open')) {
+               if (template['open'])
+                  vscode.window.showTextDocument(fileUri, { preview: false });
+            }
          }
-         let changelogUri = vscode.Uri.joinPath(
-            workspacefolderUri,
-            'CHANGELOG.md'
-         );
-         await vscode.workspace.fs.writeFile(
-            changelogUri,
-            new TextEncoder().encode(changelogcontent)
-         );
-         vscode.window.showTextDocument(changelogUri, { preview: false });
-
-         //ideas.txt
-         let ideasUri = vscode.Uri.joinPath(workspacefolderUri, 'ideas.txt');
-         await vscode.workspace.fs.writeFile(
-            ideasUri,
-            new TextEncoder().encode('')
-         );
-         vscode.window.showTextDocument(ideasUri, { preview: false });
 
          //.gitignore
          let gitignoreUri = vscode.Uri.joinPath(
@@ -174,9 +160,8 @@ function activate(context) {
          );
          await vscode.workspace.fs.writeFile(
             gitignoreUri,
-            new TextEncoder().encode('ideas.txt\nnode_modules/**\n')
+            new TextEncoder().encode(gitignoreContent)
          );
-         vscode.window.showTextDocument(gitignoreUri, { preview: false });
 
          //LICENSE
          let licenseUri = vscode.Uri.joinPath(workspacefolderUri, 'LICENSE');
@@ -195,13 +180,11 @@ function activate(context) {
             licenseUri,
             new TextEncoder().encode(licenseContent)
          );
-
-         vscode.window.showTextDocument(licenseUri, { preview: false });
       }
    );
-   //add readme overview
+   //add markdown overview
    vscode.commands.registerCommand(
-      'owngitextension.addReadmeOverview',
+      'owngitextension.addMarkdownOverview',
       async function () {
          if (!preConditionsMarkdown()) return;
          //github name
@@ -335,7 +318,12 @@ function activate(context) {
                .readFileSync(changelogUri.fsPath, 'utf-8')
                .split('\n');
             let newChangelogcontent = '';
+            let alreadyIncluded = false;
             for (let i in oldChangelogcontent) {
+               if (oldChangelogcontent[i].includes(newVersion)) {
+                  alreadyIncluded = true;
+                  break;
+               }
                newChangelogcontent += oldChangelogcontent[i];
                if (i != oldChangelogcontent.length - 1) {
                   newChangelogcontent += '\n';
@@ -344,7 +332,8 @@ function activate(context) {
                   newChangelogcontent += newVersionContent;
                }
             }
-            fs.writeFileSync(changelogUri.fsPath, newChangelogcontent);
+            if (!alreadyIncluded)
+               fs.writeFileSync(changelogUri.fsPath, newChangelogcontent);
          }
          //readme
          if (readmeUri != undefined) {
@@ -361,7 +350,12 @@ function activate(context) {
                .readFileSync(readmeUri.fsPath, 'utf-8')
                .split('\n');
             let newReadmecontent = '';
+            let alreadyIncluded = false;
             for (let i in oldReadmecontent) {
+               if (oldReadmecontent[i].includes(newVersion)) {
+                  alreadyIncluded = true;
+                  break;
+               }
                newReadmecontent += oldReadmecontent[i];
                if (i != oldReadmecontent.length - 1) {
                   newReadmecontent += '\n';
@@ -376,8 +370,8 @@ function activate(context) {
                   newReadmecontent += newVersionContent;
                }
             }
-
-            fs.writeFileSync(readmeUri.fsPath, newReadmecontent);
+            if (!alreadyIncluded)
+               fs.writeFileSync(readmeUri.fsPath, newReadmecontent);
          }
 
          //package.json
@@ -541,6 +535,79 @@ function activate(context) {
             .then((a) => {
                vscode.window.showTextDocument(a, 1, false);
             });
+      }
+   );
+   //link to file
+   vscode.commands.registerCommand(
+      'owngitextension.linkToFile',
+      async function () {
+         if (vscode.window.activeTextEditor == undefined) return;
+
+         //get file path
+         let uris = undefined;
+         await vscode.workspace.findFiles('').then((x) => {
+            uris = x.map((value) => {
+               return value.fsPath;
+            });
+         });
+         //choose file path
+         let filePath = undefined;
+         await vscode.window.showQuickPick(uris).then((value) => {
+            filePath = value;
+         });
+         if (filePath == '' || filePath == undefined) return;
+
+         //make reltive to current file
+         filePath = path.relative(
+            vscode.window.activeTextEditor.document.uri.fsPath,
+            filePath
+         );
+         filePath = filePath.replace('..\\', '');
+         //name
+         let name = '';
+         let placeholder = filePath.split('.')[0];
+         await vscode.window
+            .showInputBox({ title: 'Title', placeHolder: placeholder })
+            .then((value) => {
+               name = value;
+            });
+         if (name == undefined) return;
+         if (name == '') name = placeholder;
+
+         //check if is image
+         let imageEndings = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'webp', 'ico'];
+         let isImage = false;
+         if (imageEndings.includes(filePath.split('.').at(-1).toLowerCase()))
+            isImage = true;
+
+         //markdown or html style
+         let isMarkdown = true;
+         await vscode.window
+            .showQuickPick(['Markdown Style', 'HTML Style'])
+            .then((value) => {
+               if (value == 'HTML Style') isMarkdown = false;
+            });
+         //make content
+         let content = '';
+         if (isMarkdown) {
+            content = '[' + name + '](' + filePath + ')';
+            if (isImage) content = '!' + content;
+         } else {
+            if (isImage) {
+               content =
+                  '<img src = "' + filePath + '" title = "' + name + '"/>';
+            } else {
+               content = '<a href = "' + filePath + '">' + name + '</a>';
+            }
+         }
+
+         //write to file
+         vscode.window.activeTextEditor.edit(function (editBuilder) {
+            editBuilder.insert(
+               vscode.window.activeTextEditor.selection.active,
+               content
+            );
+         });
       }
    );
 

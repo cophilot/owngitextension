@@ -5,7 +5,7 @@
    "author": "Philipp B.",
    "publisher": "Philipp B.",
    "license": "MIT",
-   "version": "0.0.3",
+   "version": "0.0.4",
    "repository": {
       "type": "github",
       "url": "https://github.com/phil1436/owngitextension"
@@ -20,10 +20,11 @@
    "activationEvents": [
       "onCommand:owngitextension.createGitRepo",
       "onCommand:owngitextension.openFileTemplates",
-      "onCommand:owngitextension.addReadmeOverview",
+      "onCommand:owngitextension.addMarkdownOverview",
       "onCommand:owngitextension.addNewVersion",
       "onCommand:owngitextension.addLicenseTemplate",
-      "onCommand:owngitextension.editLicenseTemplate"
+      "onCommand:owngitextension.editLicenseTemplate",
+      "onCommand:owngitextension.linkToFile"
    ],
    "main": "./extension.js",
    "contributes": {
@@ -39,8 +40,8 @@
             "category": "Own Git Extension"
          },
          {
-            "command": "owngitextension.addReadmeOverview",
-            "title": "Add Readme Overview",
+            "command": "owngitextension.addMarkdownOverview",
+            "title": "Add Markdown Overview",
             "category": "Own Git Extension"
          },
          {
@@ -56,6 +57,11 @@
          {
             "command": "owngitextension.editLicenseTemplate",
             "title": "Edit License Template",
+            "category": "Own Git Extension"
+         },
+         {
+            "command": "owngitextension.linkToFile",
+            "title": "Link To File",
             "category": "Own Git Extension"
          }
       ],

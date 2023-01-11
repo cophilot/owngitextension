@@ -7,43 +7,61 @@
       "Use ${MONTH} for the current month",
       "Use ${DAY} for the current day of the month"
    ],
-   "README Template": [
-      "# ${REPONAME}",
-      "",
-      "Description",
-      "",
-      "---",
-      "",
-      "* [Bugs](#bugs)",
-      "* [Release Notes](#release-notes)",
-      "",
-      "---",
-      "",
-      "## Bugs",
-      "",
-      "* *no known bugs*",
-      "",
-      "---",
-      "",
-      "## [Release Notes](https://github.com/${GITHUBNAME}/${REPONAME}/blob/master/CHANGELOG.md)",
-      "",
-      "### [v0.0.1](https://github.com/${GITHUBNAME}/${REPONAME}/tree/0.0.1)",
-      "",
-      "* *Initial release*",
-      "",
-      "---",
-      "",
-      "by ${FULLNAME}"
-   ],
-   "CHANGELOG Template": [
-      "# Change Log *${REPONAME}*",
-      "",
-      "---",
-      "",
-      "## [v0.0.1](https://github.com/${GITHUBNAME}/${REPONAME}/tree/0.0.1) (${YEAR}-${MONTH}-${DAY})",
-      "",
-      "* *Initial release*",
-      "",
-      "---"
+   "File Templates": [
+      {
+         "name": "README.md",
+         "gitignore": false,
+         "open": true,
+         "text": [
+            "# ${REPONAME}",
+            "",
+            "Description",
+            "",
+            "---",
+            "",
+            "* [Bugs](#bugs)",
+            "* [Release Notes](#release-notes)",
+            "",
+            "---",
+            "",
+            "## Bugs",
+            "",
+            "* *no known bugs*",
+            "",
+            "---",
+            "",
+            "## [Release Notes](https://github.com/${GITHUBNAME}/${REPONAME}/blob/master/CHANGELOG.md)",
+            "",
+            "### [v0.0.1](https://github.com/${GITHUBNAME}/${REPONAME}/tree/0.0.1)",
+            "",
+            "* *Initial release*",
+            "",
+            "---",
+            "",
+            "by ${FULLNAME}"
+         ]
+      },
+      {
+         "name": "CHANGELOG.md",
+         "gitignore": false,
+         "open": true,
+         "text": [
+            "# Change Log *${REPONAME}*",
+            "",
+            "---",
+            "",
+            "## [v0.0.1](https://github.com/${GITHUBNAME}/${REPONAME}/tree/0.0.1) (${YEAR}-${MONTH}-${DAY})",
+            "",
+            "* *Initial release*",
+            "",
+            "---"
+         ]
+      },
+      {
+         "name": "ideas.txt",
+         "gitignore": true,
+         "open": false,
+         "text": ["Here you can store ideas for your git project"]
+      }
    ]
 }
