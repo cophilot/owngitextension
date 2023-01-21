@@ -2,13 +2,26 @@ const fs = require('fs');
 const path = require('path');
 const vscode = require('vscode');
 
-/* const optionsFile = path.join(__dirname, 'options.json');
-let optionsJSON = JSON.parse(fs.readFileSync(optionsFile).toString()); */
+//workspace path
+const workspacePath = path.join(__dirname, '../', 'owngitextension-workspace');
 
-const fileTemplatesFile = path.join(__dirname, 'FileTemplates.json');
-let fileTemplatesJSON = JSON.parse(
-   fs.readFileSync(fileTemplatesFile).toString()
-)['File Templates'];
+let fileTemplatesFile = undefined;
+let fileTemplatesJSON = undefined;
+try {
+   fileTemplatesFile = path.join(workspacePath, 'FileTemplates.json');
+
+   fileTemplatesJSON = JSON.parse(
+      fs.readFileSync(fileTemplatesFile).toString()
+   )['File Templates'];
+} catch (e) {
+   createWorkspace();
+
+   fileTemplatesFile = path.join(workspacePath, 'FileTemplates.json');
+
+   fileTemplatesJSON = JSON.parse(
+      fs.readFileSync(fileTemplatesFile).toString()
+   )['File Templates'];
+}
 
 /**
  * @param {vscode.ExtensionContext} context
@@ -92,7 +105,7 @@ function activate(context) {
          await vscode.window
             .showQuickPick(
                fs
-                  .readdirSync(path.join(__dirname, 'LicenseTemplate'))
+                  .readdirSync(path.join(workspacePath, 'LicenseTemplate'))
                   .map((value, index, array) => {
                      return value.replace('.txt', '');
                   })
@@ -486,13 +499,17 @@ function activate(context) {
             licenseName +
             ' License Template\n/$/ /$/ marks a comment line and will not appear in your licen\n/$/ Use ${GITHUBNAME} for your github na\n/$/ Use ${FULLNAME} for your full na\n/$/ Use ${REPONAME} for the name of the reposito\n/$/ Use ${Year} for the current ye\n/$/ Use ${MONTH} for the current mon\n/$/ Use ${DAY} for the current day\n/$/\n';
          fs.writeFileSync(
-            path.join(__dirname, 'LicenseTemplate', licenseName + '.txt'),
+            path.join(workspacePath, 'LicenseTemplate', licenseName + '.txt'),
             header
          );
          vscode.workspace
             .openTextDocument(
                vscode.Uri.file(
-                  path.join(__dirname, 'LicenseTemplate', licenseName + '.txt')
+                  path.join(
+                     workspacePath,
+                     'LicenseTemplate',
+                     licenseName + '.txt'
+                  )
                )
             )
             .then((a) => {
@@ -509,7 +526,7 @@ function activate(context) {
          await vscode.window
             .showQuickPick(
                fs
-                  .readdirSync(path.join(__dirname, 'LicenseTemplate'))
+                  .readdirSync(path.join(workspacePath, 'LicenseTemplate'))
                   .map((value, index, array) => {
                      return value.replace('.txt', '');
                   })
@@ -529,7 +546,11 @@ function activate(context) {
          vscode.workspace
             .openTextDocument(
                vscode.Uri.file(
-                  path.join(__dirname, 'LicenseTemplate', licenseName + '.txt')
+                  path.join(
+                     workspacePath,
+                     'LicenseTemplate',
+                     licenseName + '.txt'
+                  )
                )
             )
             .then((a) => {
@@ -614,13 +635,59 @@ function activate(context) {
    context.subscriptions.push(disposable);
 }
 
+// FUNCTIONS -----------------------------------------------------------------------------------------------------
+
 // This method is called when your extension is deactivated
 function deactivate() {}
+
+function createWorkspace() {
+   //make workspace
+   fs.mkdir(workspacePath, (err) => {
+      if (err) throw err;
+   });
+   //make file templates
+   fs.writeFileSync(
+      path.join(workspacePath, 'FileTemplates.json'),
+      fs.readFileSync(path.join(__dirname, 'FileTemplates.json')).toString()
+   );
+   //make license templates
+   fs.mkdir(path.join(workspacePath, 'LicenseTemplate'), (err) => {
+      if (err) throw err;
+   });
+   //apache2.0
+   fs.writeFileSync(
+      path.join(workspacePath, 'LicenseTemplate', 'Apache2.0.txt'),
+      fs
+         .readFileSync(path.join(__dirname, 'LicenseTemplate', 'Apache2.0.txt'))
+         .toString()
+   );
+   //GPL3
+   fs.writeFileSync(
+      path.join(workspacePath, 'LicenseTemplate', 'GPL3.txt'),
+      fs
+         .readFileSync(path.join(__dirname, 'LicenseTemplate', 'GPL3.txt'))
+         .toString()
+   );
+   //ISC
+   fs.writeFileSync(
+      path.join(workspacePath, 'LicenseTemplate', 'ISC.txt'),
+      fs
+         .readFileSync(path.join(__dirname, 'LicenseTemplate', 'ISC.txt'))
+         .toString()
+   );
+   //MIT
+   fs.writeFileSync(
+      path.join(workspacePath, 'LicenseTemplate', 'MIT.txt'),
+      fs
+         .readFileSync(path.join(__dirname, 'LicenseTemplate', 'MIT.txt'))
+         .toString()
+   );
+}
 
 function readLicense(licenseName) {
    let textArr = fs
       .readFileSync(
-         path.join(__dirname, 'LicenseTemplate', licenseName + '.txt'),
+         path.join(workspacePath, 'LicenseTemplate', licenseName + '.txt'),
          'utf-8'
       )
       .split('\n');
