@@ -2,6 +2,14 @@
 
 ---
 
+## [v0.0.5](https://github.com/phil1436/owngitextension/tree/0.0.5) (2023-1-21)
+
+* *.gitattributes* added
+* Categories added
+* *workspace* added
+
+---
+
 ## [v0.0.4](https://github.com/phil1436/owngitextension/tree/0.0.4) (2023-1-11)
 
 * Command `Link To File` added
