@@ -12,7 +12,11 @@ A Visual Studio Code Extension that offers tools for working with GitHub project
   * [Add New Version](#add-new-version)
   * [Link To File](#link-to-file)
 * [Installation](#installation)
+* [Workspace](#workspace)
 * [Commands](#commands)
+  * [Own Git Repository](#own-git-repository)
+  * [Own Git Markdown](#own-git-markdown)
+  * [Own Git License](#own-git-license)
 * [Configuration](#configuration)
 * [File Templates](#file-templates)
 * [Bugs](#bugs)
@@ -26,25 +30,25 @@ A Visual Studio Code Extension that offers tools for working with GitHub project
 
 Will create files based on the templates in *[FileTemplates.json](FileTemplates.json)* file as well as a *LICENSE* and a *.gitignore* file. Default Files are: *README.md*, *CHANGELOG.md* and *ideas.txt*.
 
-![CreateGitHubRepoDemo](resources/CreateGitHubRepoDemo.gif)
+![CreateGitHubRepoDemo](https://github.com/phil1436/owngitextension/raw/main/resources/CreateGitHubRepoDemo.gif)
 
 ### `Add Markdown Overview`
 
 Adds a Overview to your markdown file, at the current position of your cursor.
 
-![AddMarkdownOverviewDemo](resources/AddMarkdownOverviewDemo.gif)
+![AddMarkdownOverviewDemo](https://github.com/phil1436/owngitextension/raw/main/resources/AddMarkdownOverviewDemo.gif)
 
 ### `Add New Version`
 
 Adds a new Version to your repository.
 
-![AddNewVersionDemo](resources/AddNewVersionDemo.gif)
+![AddNewVersionDemo](https://github.com/phil1436/owngitextension/raw/main/resources/AddNewVersionDemo.gif)
 
 ### `Link To File`
 
 Adds a link to a file, in Markdown or HTML style, to the position of the cursor.
 
-![LinkToFileDemo](resources/LinkToFileDemo.gif)
+![LinkToFileDemo](https://github.com/phil1436/owngitextension/raw/main/resources/LinkToFileDemo.gif)
 
 ---
 
@@ -62,15 +66,29 @@ or download the [latest realease](https://github.com/phil1436/owngitextension/re
 
 ---
 
+## Workspace
+
+This extension will create a directory named *owngitextension-workspace* in the same directory as the extension. The workspace contains all template files, so your changes in those files will not be lost when installing a new version.
+
+---
+
 ## Commands
 
+### Own Git Repository
+
 * `Create GitHub Repository Files`: Creates standard files for a new GitHub repository.
-* `Add Markdown Overview`: Adds a Overview to your markdown file.
-* `Add New Version`: Adds a new Version to your current repository.
 * `Edit File Templates`: Opens the *FileTemplates.json* file.
+* `Add New Version`: Adds a new Version to your current repository.
+
+### Own Git Markdown
+
+* `Add Markdown Overview`: Adds a Overview to your markdown file.
+* `Link To File`: Adds a link to a file, in Markdown or HTML style, to the position of the cursor.
+
+### Own Git License
+
 * `Add License Template`: Add a Custom license template.
 * `Edit License Template`: Edit a existing license template.
-* `Link To File`: Adds a link to a file, in Markdown or HTML style, to the position of the cursor.
 
 ---
 
@@ -125,6 +143,12 @@ Example:
 ---
 
 ## [Release Notes](https://github.com/phil1436/owngitextension/blob/master/CHANGELOG.md)
+
+### [v0.0.5](https://github.com/phil1436/owngitextension/tree/0.0.5)
+
+* *.gitattributes* added
+* Categories added
+* *workspace* added
 
 ### [v0.0.4](https://github.com/phil1436/owngitextension/tree/0.0.4)
 
