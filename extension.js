@@ -584,9 +584,12 @@ function activate(context) {
             filePath
          );
          filePath = filePath.replace('..\\', '');
+
          //name
          let name = '';
          let placeholder = filePath.split('.')[0];
+         placeholder =
+            placeholder.split('\\')[placeholder.split('\\').length - 1];
          await vscode.window
             .showInputBox({ title: 'Title', placeHolder: placeholder })
             .then((value) => {
@@ -608,6 +611,8 @@ function activate(context) {
             .then((value) => {
                if (value == 'HTML Style') isMarkdown = false;
             });
+         // replace \ with /
+         filePath = filePath.replace(/\\/g, '/');
          //make content
          let content = '';
          if (isMarkdown) {
