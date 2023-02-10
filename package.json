@@ -1,111 +1,116 @@
 {
-   "name": "owngitextension",
-   "displayName": "OwnGitExtension",
-   "description": "Provides tools for creating and changing GitHub repositories.",
-   "author": "Philipp B.",
-   "publisher": "Philipp B.",
-   "license": "MIT",
-   "version": "0.0.6",
-   "repository": {
-      "type": "github",
-      "url": "https://github.com/phil1436/owngitextension"
-   },
-   "engines": {
-      "vscode": "^1.74.0"
-   },
-   "categories": [
-      "Other"
-   ],
-   "icon": "/resources/logo.png",
-   "activationEvents": [
-      "onCommand:owngitextension.createGitRepo",
-      "onCommand:owngitextension.openFileTemplates",
-      "onCommand:owngitextension.addMarkdownOverview",
-      "onCommand:owngitextension.addNewVersion",
-      "onCommand:owngitextension.addLicenseTemplate",
-      "onCommand:owngitextension.editLicenseTemplate",
-      "onCommand:owngitextension.linkToFile"
-   ],
-   "main": "./extension.js",
-   "contributes": {
-      "commands": [
-         {
-            "command": "owngitextension.createGitRepo",
-            "title": "Create GitHub Repository Files",
-            "category": "Own Git Repository"
-         },
-         {
-            "command": "owngitextension.openFileTemplates",
-            "title": "Edit File Templates",
-            "category": "Own Git Repository"
-         },
-         {
-            "command": "owngitextension.addMarkdownOverview",
-            "title": "Add Markdown Overview",
-            "category": "Own Git Markdown"
-         },
-         {
-            "command": "owngitextension.addNewVersion",
-            "title": "Add New Version",
-            "category": "Own Git Repository"
-         },
-         {
-            "command": "owngitextension.addLicenseTemplate",
-            "title": "Add License Template",
-            "category": "Own Git License"
-         },
-         {
-            "command": "owngitextension.editLicenseTemplate",
-            "title": "Edit License Template",
-            "category": "Own Git License"
-         },
-         {
-            "command": "owngitextension.linkToFile",
-            "title": "Link To File",
-            "category": "Own Git Markdown"
-         }
-      ],
-      "configuration": {
-         "title": "OwnGitExtension",
-         "type": "object",
-         "properties": {
-            "owngitextension.GitHubName": {
-               "type": "string",
-               "default": "",
-               "markdownDescription": "Your GitHub name"
+    "name": "owngitextension",
+    "displayName": "OwnGitExtension",
+    "description": "Provides tools for creating and changing GitHub repositories.",
+    "author": "Philipp B.",
+    "publisher": "Philipp B.",
+    "license": "MIT",
+    "version": "0.0.7",
+    "repository": {
+        "type": "github",
+        "url": "https://github.com/phil1436/owngitextension"
+    },
+    "engines": {
+        "vscode": "^1.74.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "icon": "/resources/logo.png",
+    "activationEvents": [
+        "onCommand:owngitextension.createGitRepo",
+        "onCommand:owngitextension.openFileTemplates",
+        "onCommand:owngitextension.addMarkdownOverview",
+        "onCommand:owngitextension.addNewVersion",
+        "onCommand:owngitextension.addLicenseTemplate",
+        "onCommand:owngitextension.editLicenseTemplate",
+        "onCommand:owngitextension.linkToFile"
+    ],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "owngitextension.createGitRepo",
+                "title": "Create GitHub Repository Files",
+                "category": "Own Git Repository"
             },
-            "owngitextension.FullName": {
-               "type": "string",
-               "default": "",
-               "markdownDescription": "Your full name"
+            {
+                "command": "owngitextension.openFileTemplates",
+                "title": "Edit File Templates",
+                "category": "Own Git Repository"
             },
-            "owngitextension.NewVersion.EditPackageFile": {
-               "type": "boolean",
-               "default": true,
-               "markdownDescription": "If enabled adds a new Version to the *package.json* file"
+            {
+                "command": "owngitextension.addMarkdownOverview",
+                "title": "Add Markdown Overview",
+                "category": "Own Git Markdown"
             },
-            "owngitextension.NewVersion.EditPackageLockFile": {
-               "type": "boolean",
-               "default": false,
-               "markdownDescription": "If enabled adds a new Version to the *package-lock.json* file"
+            {
+                "command": "owngitextension.addNewVersion",
+                "title": "Add New Version",
+                "category": "Own Git Repository"
+            },
+            {
+                "command": "owngitextension.addLicenseTemplate",
+                "title": "Add License Template",
+                "category": "Own Git License"
+            },
+            {
+                "command": "owngitextension.editLicenseTemplate",
+                "title": "Edit License Template",
+                "category": "Own Git License"
+            },
+            {
+                "command": "owngitextension.linkToFile",
+                "title": "Link To File",
+                "category": "Own Git Markdown"
             }
-         }
-      }
-   },
-   "scripts": {
-      "lint": "eslint .",
-      "pretest": "npm run lint",
-      "test": "node ./test/runTest.js"
-   },
-   "devDependencies": {
-      "@types/vscode": "^1.74.0",
-      "@types/glob": "^8.0.0",
-      "@types/mocha": "^10.0.0",
-      "@types/node": "16.x",
-      "eslint": "^8.26.0",
-      "glob": "^8.0.3",
-      "mocha": "^10.1.0",
-      "typescript": "^4.8.4",
-      "@vscode/test-electron": "^2.2.0"
-   }
+        ],
+        "configuration": {
+            "title": "OwnGitExtension",
+            "type": "object",
+            "properties": {
+                "owngitextension.GitHubName": {
+                    "type": "string",
+                    "default": "",
+                    "markdownDescription": "Your GitHub name"
+                },
+                "owngitextension.FullName": {
+                    "type": "string",
+                    "default": "",
+                    "markdownDescription": "Your full name"
+                },
+                "owngitextension.NewVersion.EditPackageFile": {
+                    "type": "boolean",
+                    "default": true,
+                    "markdownDescription": "If enabled adds a new Version to the *package.json* file"
+                },
+                "owngitextension.NewVersion.EditPackageLockFile": {
+                    "type": "boolean",
+                    "default": false,
+                    "markdownDescription": "If enabled adds a new Version to the *package-lock.json* file"
+                },
+                "owngitextension.Overview.IncludeFirstHeading": {
+                    "type": "boolean",
+                    "default": false,
+                    "markdownDescription": "If enabled will include the first heading in the overview"
+                }
+            }
+        }
+    },
+    "scripts": {
+        "lint": "eslint .",
+        "pretest": "npm run lint",
+        "test": "node ./test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.74.0",
+        "@types/glob": "^8.0.0",
+        "@types/mocha": "^10.0.0",
+        "@types/node": "16.x",
+        "eslint": "^8.26.0",
+        "glob": "^8.0.3",
+        "mocha": "^10.1.0",
+        "typescript": "^4.8.4",
+        "@vscode/test-electron": "^2.2.0"
+    }
 }

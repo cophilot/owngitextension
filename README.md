@@ -6,21 +6,21 @@ A Visual Studio Code Extension that offers tools for working with GitHub project
 
 ---
 
--  [Features](#features)
-   -  [Create GitHub Repository Files](#create-github-repository-files)
-   -  [Add Markdown Overview](#add-markdown-overview)
-   -  [Add New Version](#add-new-version)
-   -  [Link To File](#link-to-file)
--  [Installation](#installation)
--  [Workspace](#workspace)
--  [Commands](#commands)
-   -  [Own Git Repository](#own-git-repository)
-   -  [Own Git Markdown](#own-git-markdown)
-   -  [Own Git License](#own-git-license)
--  [Configuration](#configuration)
--  [File Templates](#file-templates)
--  [Bugs](#bugs)
--  [Release Notes](#release-notes)
+-   [Features](#features)
+    -   [Create GitHub Repository Files](#create-github-repository-files)
+    -   [Add Markdown Overview](#add-markdown-overview)
+    -   [Add New Version](#add-new-version)
+    -   [Link To File](#link-to-file)
+-   [Installation](#installation)
+-   [Workspace](#workspace)
+-   [Commands](#commands)
+    -   [Own Git Repository](#own-git-repository)
+    -   [Own Git Markdown](#own-git-markdown)
+    -   [Own Git License](#own-git-license)
+-   [Configuration](#configuration)
+-   [File Templates](#file-templates)
+-   [Bugs](#bugs)
+-   [Release Notes](#release-notes)
 
 ---
 
@@ -54,7 +54,7 @@ Adds a link to a file, in Markdown or HTML style, to the position of the cursor.
 
 ## Installation
 
--  Clone this repository (recommended under `~/.vscode/extensions`):
+-   Clone this repository (recommended under `~/.vscode/extensions`):
 
 ```shell
 git clone https://github.com/phil1436/owngitextension C:\Users\<your-user>\.vscode\extensions\owngitextension
@@ -62,7 +62,7 @@ git clone https://github.com/phil1436/owngitextension C:\Users\<your-user>\.vsco
 
 or download the [latest realease](https://github.com/phil1436/owngitextension/releases/latest) and extract the file into `~/.vscode/extensions`.
 
--  If the extension did not got installed, run the command `Developer: Install Extension from Location...` and choose the extension folder.
+-   If the extension did not got installed, run the command `Developer: Install Extension from Location...` and choose the extension folder.
 
 ---
 
@@ -76,19 +76,19 @@ This extension will create a directory named _owngitextension-workspace_ in the 
 
 ### Own Git Repository
 
--  `Create GitHub Repository Files`: Creates standard files for a new GitHub repository.
--  `Edit File Templates`: Opens the _FileTemplates.json_ file.
--  `Add New Version`: Adds a new Version to your current repository.
+-   `Create GitHub Repository Files`: Creates standard files for a new GitHub repository.
+-   `Edit File Templates`: Opens the _FileTemplates.json_ file.
+-   `Add New Version`: Adds a new Version to your current repository.
 
 ### Own Git Markdown
 
--  `Add Markdown Overview`: Adds a Overview to your markdown file.
--  `Link To File`: Adds a link to a file, in Markdown or HTML style, to the position of the cursor.
+-   `Add Markdown Overview`: Adds a Overview to your markdown file.
+-   `Link To File`: Adds a link to a file, in Markdown or HTML style, to the position of the cursor.
 
 ### Own Git License
 
--  `Add License Template`: Add a Custom license template.
--  `Edit License Template`: Edit a existing license template.
+-   `Add License Template`: Add a Custom license template.
+-   `Edit License Template`: Edit a existing license template.
 
 ---
 
@@ -96,13 +96,17 @@ This extension will create a directory named _owngitextension-workspace_ in the 
 
 Go to `File > Preferences > Settings` and than navigate to `Extensions > OwnGitExtension`.
 
--  `GitHubName`: Your GitHub name.
--  `FullName`: Your full name.
+-   `GitHubName`: Your GitHub name.
+-   `FullName`: Your full name.
 
 ### New Version
 
--  `Edit Package File`: If enabled adds a new Version to the _package.json_ file
--  `Edit Package Lock File`: If enabled adds a new Version to the _package-lock.json_ file
+-   `Edit Package File`: If enabled adds a new Version to the _package.json_ file
+-   `Edit Package Lock File`: If enabled adds a new Version to the _package-lock.json_ file
+
+### Overview
+
+-   `Include First Headings`: If enabled will include the first level headings in the overview. (default is _false_)
 
 ---
 
@@ -111,10 +115,10 @@ Go to `File > Preferences > Settings` and than navigate to `Extensions > OwnGitE
 You can configure the File Templates in the _[FileTemplates.json](FileTemplates.json)_ file. Open it with `Edit File Templates`. This files will be created with `Create GitHub Repository Files` Command.
 Add a new file template in the `File Templates` array as JSON object:
 
--  `name`: The name of the file with the file ending.
--  `text`: An array of strings with the text in the file. You can use placeholders (view `__comment`).
--  `gitignore`(optional): If set to `true` will add the file to the _.gitignore_ file (default is `false`).
--  `open`(optional): If set to `true` eill open the file after it was created (default is `false`).
+-   `name`: The name of the file with the file ending.
+-   `text`: An array of strings with the text in the file. You can use placeholders (view `__comment`).
+-   `gitignore`(optional): If set to `true` will add the file to the _.gitignore_ file (default is `false`).
+-   `open`(optional): If set to `true` eill open the file after it was created (default is `false`).
 
 Example:
 
@@ -138,44 +142,49 @@ Example:
 
 ## Bugs
 
--  _no known bugs_
+-   _no known bugs_
 
 ---
 
 ## [Release Notes](https://github.com/phil1436/owngitextension/blob/master/CHANGELOG.md)
 
-### [v0.0.6](https://github.com/phil1436/RepoName/tree/0.0.6)
+### [v0.0.7](https://github.com/phil1436/owngitextension/tree/0.0.7)
 
--  Bug fixes
+-   Bug fixes
+-   Configuration added
+
+### [v0.0.6](https://github.com/phil1436/owngitextension/tree/0.0.6)
+
+-   Bug fixes
 
 ### [v0.0.5](https://github.com/phil1436/owngitextension/tree/0.0.5)
 
--  _.gitattributes_ added
--  Categories added
--  _workspace_ added
+-   _.gitattributes_ added
+-   Categories added
+-   _workspace_ added
 
 ### [v0.0.4](https://github.com/phil1436/owngitextension/tree/0.0.4)
 
--  Command added
--  Command renamed
--  Commands extended
+-   Command added
+-   Command renamed
+-   Commands extended
 
 ### [v0.0.3](https://github.com/phil1436/owngitextension/tree/0.0.3)
 
--  Bug fixes
--  License Template added
--  Commands added
+-   Bug fixes
+-   License Template added
+-   Commands added
 
 ### [v0.0.2](https://github.com/phil1436/owngitextension/tree/0.0.2)
 
--  Bug fixes
--  Insert Configurations
--  Commands added
--  Commands removed
+-   Bug fixes
+-   Insert Configurations
+-   Commands added
+-   Commands removed
 
 ### [v0.0.1](https://github.com/phil1436/owngitextension/tree/0.0.1)
 
--  _Initial release_
+-   _Initial release_
 
 ---
 
