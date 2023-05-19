@@ -11,13 +11,13 @@
     <a href="https://github.com/phil1436/owngitextension/releases">
         <img src= "https://img.shields.io/github/v/release/phil1436/owngitextension?display_name=tag" alt="current release">
     </a>
-    <a href="https://github.com/phil1436/owngitextension/blob/master/LICENSE">
+    <a href="https://github.com/phil1436/owngitextension/blob/main/LICENSE">
         <img src="https://img.shields.io/github/license/phil1436/owngitextension" alt="license">
     </a>
     <a href="https://github.com/phil1436/owngitextension/stargazers">
         <img src="https://img.shields.io/github/stars/phil1436/owngitextension" alt="stars">
     </a>
-    <a href="https://github.com/phil1436/owngitextension/commits/master">
+    <a href="https://github.com/phil1436/owngitextension/commits/main">
         <img src="https://img.shields.io/github/last-commit/phil1436/owngitextension" alt="last commit">
     </a>
 </div>
