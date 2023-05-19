@@ -1,8 +1,26 @@
-<img src="https://github.com/phil1436/owngitextension/raw/main/resources/logo.png" width="25%"/>
+<div align="center">
+    <br />
+    <img src="https://github.com/phil1436/owngitextension/raw/main/resources/logo.png" alt="OwnGitExtensionLogo" width="25%"/>
+    <h1>OwnGitExtension</h1>
+    <p>
+    A Visual Studio Code Extension that offers tools for working with GitHub projects.
+    </p>
+</div>
 
-# OwnGitExtension
-
-A Visual Studio Code Extension that offers tools for working with GitHub projects.
+<div align="center">
+    <a href="https://github.com/phil1436/owngitextension/releases">
+        <img src= "https://img.shields.io/github/v/release/phil1436/owngitextension?display_name=tag" alt="current release">
+    </a>
+    <a href="https://github.com/phil1436/owngitextension/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/phil1436/owngitextension" alt="license">
+    </a>
+    <a href="https://github.com/phil1436/owngitextension/stargazers">
+        <img src="https://img.shields.io/github/stars/phil1436/owngitextension" alt="stars">
+    </a>
+    <a href="https://github.com/phil1436/owngitextension/commits/master">
+        <img src="https://img.shields.io/github/last-commit/phil1436/owngitextension" alt="last commit">
+    </a>
+</div>
 
 ---
 
@@ -152,39 +170,6 @@ Example:
 
 -   Bug fixes
 -   Configuration added
-
-### [v0.0.6](https://github.com/phil1436/owngitextension/tree/0.0.6)
-
--   Bug fixes
-
-### [v0.0.5](https://github.com/phil1436/owngitextension/tree/0.0.5)
-
--   _.gitattributes_ added
--   Categories added
--   _workspace_ added
-
-### [v0.0.4](https://github.com/phil1436/owngitextension/tree/0.0.4)
-
--   Command added
--   Command renamed
--   Commands extended
-
-### [v0.0.3](https://github.com/phil1436/owngitextension/tree/0.0.3)
-
--   Bug fixes
--   License Template added
--   Commands added
-
-### [v0.0.2](https://github.com/phil1436/owngitextension/tree/0.0.2)
-
--   Bug fixes
--   Insert Configurations
--   Commands added
--   Commands removed
-
-### [v0.0.1](https://github.com/phil1436/owngitextension/tree/0.0.1)
-
--   _Initial release_
 
 ---
 
